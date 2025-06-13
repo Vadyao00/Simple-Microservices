@@ -40,7 +40,7 @@
 ### 1. Клонирование репозитория
 ```sh
 # Замените ссылку на ваш форк или используйте мой оригинальный репозиторий:
-git clone https://github.com/vadyao0/Microservices.git
+git clone https://github.com/Vadyao00/Simple-Microservices.git
 cd Microservices
 ```
 
