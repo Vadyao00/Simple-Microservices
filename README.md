@@ -1,5 +1,34 @@
 # Microservices Project
 
+## Архитектура и взаимодействие микросервисов
+
+В проекте реализованы два основных микросервиса:
+
+- **PlatformService** — сервис управления платформами.
+- **CommandsService** — сервис управления командами, связанными с платформами.
+
+### Взаимодействие между сервисами
+В системе используются три способа коммуникации между сервисами:
+
+#### 1. Синхронное HTTP-взаимодействие
+- **PlatformService → CommandsService**
+  - При создании новой платформы PlatformService отправляет HTTP POST-запрос в CommandsService по адресу `/api/c/platforms`.
+  - Для этого используется класс `HttpCommandDataClient`.
+  - Это позволяет PlatformService сразу синхронно передать данные о новой платформе в CommandsService.
+
+#### 2. Синхронное gRPC-взаимодействие
+- **CommandsService → PlatformService**
+  - Когда CommandsService нужно получить список всех платформ, он обращается к PlatformService по gRPC (метод `GetAllPlatforms`).
+  - Для этого используется proto-файл `platforms.proto` и клиент `PlatformDataClient`.
+
+#### 3. Асинхронное взаимодействие через RabbitMQ
+- **PlatformService → RabbitMQ → CommandsService**
+  - При создании новой платформы PlatformService публикует событие в RabbitMQ (exchange `trigger`) с помощью класса `MessageBusClient`.
+  - CommandsService подписан на этот exchange через класс `MessageBusSubscriber` и асинхронно получает события о новых платформах.
+  - Это позволяет реализовать асинхронную интеграцию: PlatformService не ждёт ответа от CommandsService, а просто отправляет событие, которое будет обработано позже.
+
+---
+
 ## Описание
 
 В этом репозитории находятся два микросервиса (`CommandsService` и `PlatformService`) и настройки для их запуска в Kubernetes.
@@ -95,4 +124,4 @@ curl -X GET http://acme.com/api/c/platforms
 - Kubernetes (minikube/kind)
 - kubectl
 
---- 
+---
