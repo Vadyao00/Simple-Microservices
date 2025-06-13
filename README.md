@@ -40,17 +40,18 @@
 ### 1. Клонирование репозитория
 ```sh
 # Замените ссылку на ваш форк или используйте мой оригинальный репозиторий:
-git clone https://github.com/vadyao0/Microservices.git
-cd Microservices
+git clone https://github.com/Vadyao00/Simple-Microservices.git
+cd Simple-Microservices
 ```
 
 ### 2. Сборка Docker-образов
 
 Перейдите в каждую папку микросервиса и соберите образы:
 ```sh
-cd CommandsService
+cd CommandsService/CommandsService
 docker build -t <ваш_dockerhub_username>/commands-service:latest .
-cd ../PlatformService
+then from Simple-Microservices folder:
+cd PlatformService/PlatformService
 docker build -t <ваш_dockerhub_username>/platform-service:latest .
 ```
 
@@ -64,8 +65,8 @@ docker push <ваш_dockerhub_username>/platform-service:latest
 ```
 
 **ИЛИ** используйте уже готовые образы из моего Docker Hub:
-- vadyao0/commands-service:latest
-- vadyao0/platform-service:latest
+- vadyao0/commandservice:latest
+- vadyao0/platformservice:latest
 
 Для этого просто не меняйте image в yaml-файлах K8S.
 
@@ -137,6 +138,7 @@ curl -X GET http://acme.com/api/c/platforms
 - kubectl
 
 ---
+<<<<<<< HEAD
 
 ## Удаление ресурсов и очистка кластера
 
@@ -167,3 +169,5 @@ curl -X GET http://acme.com/api/c/platforms
    ```
 
 ---
+=======
+>>>>>>> a1a07a606f74650679055954479e0dc70bcf5987
