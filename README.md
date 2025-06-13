@@ -10,7 +10,8 @@
 
 ### 1. Клонирование репозитория
 ```sh
-git clone https://github.com/ВАШ_ПОЛЬЗОВАТЕЛЬ/ВАШ_РЕПОЗИТОРИЙ.git
+# Замените ссылку на ваш форк или используйте мой оригинальный репозиторий:
+git clone https://github.com/vadyao0/Microservices.git
 cd Microservices
 ```
 
@@ -28,12 +29,18 @@ docker build -t <ваш_dockerhub_username>/platform-service:latest .
 
 ```sh
 docker login
-# Замените <ваш_dockerhub_username> на ваш логин Docker Hub
+# Пушим образы в ваш Docker Hub (замените <ваш_dockerhub_username> на ваш логин)
 docker push <ваш_dockerhub_username>/commands-service:latest
 docker push <ваш_dockerhub_username>/platform-service:latest
 ```
 
-### 4. Деплой в Kubernetes
+**ИЛИ** используйте уже готовые образы из моего Docker Hub:
+- vadyao0/commands-service:latest
+- vadyao0/platform-service:latest
+
+Для этого просто не меняйте image в yaml-файлах K8S.
+
+### 4. Деплой в Kubernetes (minikube/kind)
 
 Перейдите в папку с yaml-файлами:
 ```sh
@@ -48,25 +55,44 @@ kubectl apply -f .
 kubectl get pods
 ```
 
-#### (Опционально) Примеры curl-запросов для тестирования сервисов
+#### Получение доступа к Ingress
+
+Добавьте в hosts:
+- **Windows:** Откройте файл `C:\Windows\System32\drivers\etc\hosts` от имени администратора и добавьте строку:
+  ```
+  127.0.0.1 acme.com
+  ```
+- **Linux/Mac:**
+  ```
+  sudo -- sh -c "echo '127.0.0.1 acme.com' >> /etc/hosts"
+  ```
+
+---
+
+## Тестирование сервисов
+
+**PlatformService:**
+```sh
+curl -X GET http://acme.com/api/platforms
+```
+
+**CommandsService:**
+```sh
+curl -X GET http://acme.com/api/c/platforms
+```
 
 ---
 
 ## Структура проекта
 - `CommandsService/` — исходный код и Dockerfile для сервиса команд
 - `PlatformService/` — исходный код и Dockerfile для сервиса платформ
-- `K8S/` — Kubernetes-манифесты (deployment, service и т.д.)
+- `K8S/` — Kubernetes-манифесты (deployment, service, ingress и т.д.)
 
 ---
 
 ## Требования
 - Docker
-- Kubernetes (minikube/kind/другой кластер)
+- Kubernetes (minikube/kind)
 - kubectl
 
----
-
-## TODO
-- [ ] Указать ваш Docker Hub username
-- [ ] Уточнить тип кластера Kubernetes
-- [ ] Добавить примеры curl-запросов для тестирования 
+--- 
