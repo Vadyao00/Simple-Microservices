@@ -138,7 +138,6 @@ curl -X GET http://acme.com/api/c/platforms
 - kubectl
 
 ---
-<<<<<<< HEAD
 
 ## Удаление ресурсов и очистка кластера
 
@@ -169,5 +168,3 @@ curl -X GET http://acme.com/api/c/platforms
    ```
 
 ---
-=======
->>>>>>> a1a07a606f74650679055954479e0dc70bcf5987
