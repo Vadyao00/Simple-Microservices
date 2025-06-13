@@ -48,9 +48,10 @@ cd Simple-Microservices
 
 Перейдите в каждую папку микросервиса и соберите образы:
 ```sh
-cd CommandsService
+cd CommandsService/CommandsService
 docker build -t <ваш_dockerhub_username>/commands-service:latest .
-cd ../PlatformService
+then from Simple-Microservices folder:
+cd PlatformService/PlatformService
 docker build -t <ваш_dockerhub_username>/platform-service:latest .
 ```
 
