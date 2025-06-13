@@ -65,8 +65,8 @@ docker push <ваш_dockerhub_username>/platform-service:latest
 ```
 
 **ИЛИ** используйте уже готовые образы из моего Docker Hub:
-- vadyao0/commands-service:latest
-- vadyao0/platform-service:latest
+- vadyao0/commandservice:latest
+- vadyao0/platformservice:latest
 
 Для этого просто не меняйте image в yaml-файлах K8S.
 
