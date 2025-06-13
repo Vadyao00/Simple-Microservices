@@ -77,6 +77,18 @@ cd ../K8S
 kubectl apply -f .
 ```
 
+### Установка Ingress-контроллера (nginx)
+
+Для работы Ingress-ресурсов в Kubernetes необходим специальный контроллер. Один из самых популярных — nginx-ingress-controller. Его можно установить командой:
+
+```sh
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.3/deploy/static/provider/aws/deploy.yaml
+```
+
+Эта команда развернёт дополнительный pod (контейнер) в вашем кластере, который будет обрабатывать входящие HTTP(S) запросы и маршрутизировать их согласно правилам, описанным в ваших Ingress-манифестах.
+
+---
+
 ### 5. Проверка работы
 
 Проверьте, что все поды запущены:
@@ -123,5 +135,35 @@ curl -X GET http://acme.com/api/c/platforms
 - Docker
 - Kubernetes (minikube/kind)
 - kubectl
+
+---
+
+## Удаление ресурсов и очистка кластера
+
+Если вы хотите полностью удалить все развернутые сервисы, ingress-контроллер и очистить docker-образы, выполните следующие шаги:
+
+1. **Удалить все ресурсы, созданные из ваших yaml-файлов:**
+   ```sh
+   kubectl delete -f ./K8S
+   ```
+
+2. **Удалить ingress-nginx-контроллер:**
+   ```sh
+   kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.3/deploy/static/provider/aws/deploy.yaml
+   ```
+
+3. **(Опционально) Удалить docker-образы локально:**
+   ```sh
+   docker rmi <ваш_dockerhub_username>/commands-service:latest
+   docker rmi <ваш_dockerhub_username>/platform-service:latest
+   # или, если использовали мои образы:
+   docker rmi vadyao0/commands-service:latest
+   docker rmi vadyao0/platform-service:latest
+   ```
+
+4. **(Опционально) Очистить неиспользуемые docker-образы и контейнеры:**
+   ```sh
+   docker system prune -a
+   ```
 
 ---
