@@ -41,7 +41,7 @@
 ```sh
 # Замените ссылку на ваш форк или используйте мой оригинальный репозиторий:
 git clone https://github.com/Vadyao00/Simple-Microservices.git
-cd Microservices
+cd Simple-Microservices
 ```
 
 ### 2. Сборка Docker-образов
